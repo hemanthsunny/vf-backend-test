@@ -3,6 +3,7 @@ const Cart = require('./cart');
 const Product = require('./product');
 
 const CartEntity = require('../entities/CartEntity');
+const products = require('../__mockdata__/products.json');
 
 describe('CartRepository', () => {
   let cartRepository;
@@ -30,22 +31,7 @@ describe('CartRepository', () => {
       const expectedCartData = {
         cartId: cartId,
         userId: 'user-id',
-        products: [
-          {
-            productId: 'product-1-id',
-            name: 'Product 1',
-            description: 'Description for Product 1',
-            price: 10.99,
-            quantity: 2
-          },
-          {
-            productId: 'product-2-id',
-            name: 'Product 2',
-            description: 'Description for Product 2',
-            price: 19.99,
-            quantity: 1
-          }
-        ]
+        products
       };
       const result = await cartRepository.getCart(cartId);
 

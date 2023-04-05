@@ -1,6 +1,7 @@
 const assert = require('assert');
 const request = require('supertest');
 const app = require('../');
+const products = require('../__mockdata__/products.json');
 
 describe('Cart API', () => {
   describe('POST /cart', () => {
@@ -12,22 +13,7 @@ describe('Cart API', () => {
       assert.deepStrictEqual(res.body,   {
         "cartId": "cart-1",
         "userId": "user-1",
-        "products": [
-          {
-            "productId": "product-1",
-            "name": "Product 1",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "price": 10.99,
-            "quantity": 2
-          },
-          {
-            "productId": "product-2",
-            "name": "Product 2",
-            "description": "Suspendisse ut sapien magna. Sed eu orci auctor, lobortis velit ut, laoreet magna.",
-            "price": 19.99,
-            "quantity": 1
-          }
-        ]
+        "products": products
       });
     });
   });
