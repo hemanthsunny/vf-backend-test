@@ -1,8 +1,8 @@
 const assert = require('assert');
-const ProductRepository = require('./ProductRepository');
+const Product = require('./product');
 
-describe('ProductRepository', function () {
-  const productRepository = new ProductRepository();
+describe('Product', function () {
+  const productRepository = new Product();
 
   before(async function () {
     // Make sure to wait for data to be fetched before running tests
@@ -14,6 +14,50 @@ describe('ProductRepository', function () {
       const products = await productRepository.getAllProducts();
       assert(Array.isArray(products));
     });
+
+    it('should sort products by price in descending order', () => {
+      const sortedProducts = await productRepository.getAllProducts("price", "asc");
+      assert.deepEqual(sortedProducts, [
+        {
+          id: 10822924045,
+          title: "Play On Player Women's Tee",
+          description: "\u003cp\u003ePlay On Player Women's Tee\u003c\/p\u003e",
+          price: 20,
+          variant_title: "White \/ Small",
+          variant_id: 45096030669
+        },
+        {
+          id: 7596624904422,
+          title: "Classic Sticker Pack",
+          description: "\u003cp\u003eeFukt Classic Sticker Pack. Assorted pack of\u00a05 eFukt stickers.\u003c\/p\u003e\n\u003cp\u003eAvailable while supplies last.\u003c\/p\u003e\n\u003cul\u003e\u003c\/ul\u003e",
+          price: 8,
+          variant_title: "Default Title",
+          variant_id: 42397295673574
+        },
+      ]);
+    });
+
+     it('should select the most expensive variant for each product', () => {
+       const sortedProducts = await productRepository.getAllProducts("price", "desc");
+       assert.deepEqual(sortedProducts, [
+         {
+           id: 10822924045,
+           title: "Play On Player Women's Tee",
+           description: "\u003cp\u003ePlay On Player Women's Tee\u003c\/p\u003e",
+           price: 25,
+           variant_title: "White \/ 2XL",
+           variant_id: 45096030925
+         },
+         {
+           id: 7596624904422,
+           title: "Classic Sticker Pack",
+           description: "\u003cp\u003eeFukt Classic Sticker Pack. Assorted pack of\u00a05 eFukt stickers.\u003c\/p\u003e\n\u003cp\u003eAvailable while supplies last.\u003c\/p\u003e\n\u003cul\u003e\u003c\/ul\u003e",
+           price: 8,
+           variant_title: "Default Title",
+           variant_id: 42397295673574
+         },
+       ]);
+     });
   });
 
   describe('#getProductPriceById()', function () {

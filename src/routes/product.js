@@ -4,7 +4,10 @@ const router = express.Router();
 const Product = require('../controllers/product');
 
 router.get('/get-products', (req, res, next) => {
-  const products = new Product().getAllProducts();
+  const sort = req.query.sort || 'title';
+  const orderBy = req.query.order || 'asc';
+
+  const products = new Product().getAllProducts(sort, orderBy);
   res.status(201).json(products);
 });
 
